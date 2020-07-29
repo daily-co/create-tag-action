@@ -45,3 +45,13 @@ jobs:
           environment: 'qa'
           github-token: '${{ secrets.GITHUB_TOKEN }}'
 ```
+
+# Building
+
+```
+# Once, for setting up ncc:
+$ npm i -g @zeit/ncc
+
+# When changed:
+$ npm i
+$ ncc build
