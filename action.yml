@@ -1,0 +1,20 @@
+name: 'Create Tag'
+description: 'Creates tags in GitHub for deployments'
+inputs:
+  app-name:
+    description: 'Name of the app to include in tag, e.g. "dashboard"'
+    required: true
+  environment:
+    description: 'Environment to which the deployment was made, e.g. "prod"'
+    required: true
+  github-token:
+    description: 'API token for GitHub REST API'
+    required: true
+outputs:
+  tag:
+    description: 'Final tag applied'
+runs:
+  using: 'node12'
+  # 'main' below needs to be relative to repo root for testing with 'act'
+  # For running in GitHub, should be relative to 'action.yml' location
+  main: 'dist/index.js'
