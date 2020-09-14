@@ -1,7 +1,31 @@
 # Create Tag Action
 
-A GitHub action that tags the repo with a tag formatted according to our
-[version tagging standard](https://www.notion.so/dailyco/Version-Tagging-Proposal-5cd4e26542234f898d5c0a38e3cb08bd).
+A GitHub action that tags the repo with a tag formatted according to our convention.
+
+## Background
+
+At [Daily](https://www.daily.co), We use a monorepo to manage source code for most of our applications.
+As we faced the challenge of maintaining our [changelog](https://docs.daily.co/changelog), we understood
+that knowing what's changed in production wouldn't be as simple as comparing two commits in our monorepo,
+because we don't deploy every application with every commit.
+
+To help us understand what's changed, and which changes have been deployed to an environment, we developed
+a convention for tags we apply in our GitHub:
+
+```
+Convention: [app-name]-[YYYY-mm-dd]-[environment]
+
+Example: web-server-2020-07-01-production
+```
+
+We added automation around our deployments to automatically create these tags, pointing to the specific commit
+which is being deployed.
+
+## This Action
+
+The `create-tag-action` creates GitHub tags after the deployment of an application according to this convention.
+If the desired tag already exists, the commit with which the tag is associated is changed to the current commit
+being used in the workflow.
 
 # Inputs
 
