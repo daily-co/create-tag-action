@@ -57,13 +57,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/checkout@v2
-        with:
-          repository: daily-co/create-tag-action
-          token ${{ secrets.GITHUB_TOKEN }}
-          path: .github/actions/create-tag-action
-      - name: Tag the staging deployment
-        uses: ./.github/actions/create-tag-action
+      - name: Tag the deployment
+        uses: daily-co/create-tag-action@v1.0
         with:
           app-name: 'my-application'
           environment: 'qa'
