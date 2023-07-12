@@ -29,18 +29,18 @@ being used in the workflow.
 
 # Inputs
 
-- *app-name*: the name of the application being deployed
-- *environment*: the name of the environment to which the application is being deployed
-- *github-token*: a GitHub access token that gives the action access to tag the repository
+- _app-name_: the name of the application being deployed
+- _environment_: the name of the environment to which the application is being deployed
+- _github-token_: a GitHub access token that gives the action access to tag the repository
 
 # Outputs
 
-- *tag*: the name of the final generated tag
+- _tag_: the name of the final generated tag
 
 # Notes
 
-We want to use this from multiple repos without duplicating the code.  However, GitHub Actions does not support
-using actions in one private repo from another repo.  The workaround is to clone the repo containing the action
+We want to use this from multiple repos without duplicating the code. However, GitHub Actions does not support
+using actions in one private repo from another repo. The workaround is to clone the repo containing the action
 in a separate `actions/checkout` step, and refer to it using the path in which it gets checked out.
 
 # Example Usage
@@ -74,3 +74,4 @@ $ npm i -g @zeit/ncc
 # When changed:
 $ npm i
 $ ncc build
+```
