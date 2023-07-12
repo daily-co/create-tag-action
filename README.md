@@ -69,7 +69,7 @@ jobs:
 
 ```
 # Once, for setting up ncc:
-$ npm i -g @zeit/ncc
+$ npm i -g @vercel/ncc
 
 # When changed:
 $ npm i
