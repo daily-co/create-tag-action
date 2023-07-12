@@ -8000,17 +8000,17 @@ function getTagName(appName, environment) {
 
 async function run() {
   try {
-    const appName = core.getInput('app-name');
+    const appName = core.getInput("app-name");
     if (!appName) {
       core.setFailed('Input "app-name" is missing');
     }
 
-    const environment = core.getInput('environment');
+    const environment = core.getInput("environment");
     if (!environment) {
       core.setFailed('Input "environment" is missing');
     }
 
-    let githubToken = core.getInput('github-token');
+    let githubToken = core.getInput("github-token");
     if (!githubToken) {
       if (process.env.GITHUB_TOKEN) {
         githubToken = process.env.GITHUB_TOKEN;
@@ -8024,11 +8024,11 @@ async function run() {
     const octokit = github.getOctokit(githubToken);
 
     const tagName = getTagName(appName, environment);
-    core.setOutput('tag', tagName);
+    core.setOutput("tag", tagName);
     const tagMessage = `${tagName} deployed via GitHub Actions`;
 
     const { owner, repo } = github.context.repo;
-    const sha = core.getInput('sha') || process.env.GITHUB_SHA;
+    const sha = core.getInput("sha") || process.env.GITHUB_SHA;
     if (!sha) {
       core.setFailed(
         'SHA to tag must be provided as input "sha" or environment variable "GITHUB_SHA"'
@@ -8041,10 +8041,10 @@ async function run() {
       tag: tagName,
       message: tagMessage,
       object: sha,
-      type: 'commit',
+      type: "commit",
     });
 
-    console.log('Tag created successfully.');
+    console.log("Tag created successfully.");
 
     const refName = `tags/${tagName}`;
     let refExists = false;
@@ -8056,7 +8056,7 @@ async function run() {
         ref: refName,
       });
       refExists = true;
-      console.log('Existing ref found.  Will update.');
+      console.log("Existing ref found.  Will update.");
     } catch (error) {
       if (error.status != 404) {
         throw error;
@@ -8073,7 +8073,7 @@ async function run() {
         ref: refName,
         sha,
       });
-      console.log('Ref updated.');
+      console.log("Ref updated.");
     } else {
       // Create new ref
       const fullRefName = `refs/${refName}`;
@@ -8083,7 +8083,7 @@ async function run() {
         ref: fullRefName,
         sha,
       });
-      console.log('Ref created.');
+      console.log("Ref created.");
     }
   } catch (error) {
     core.setFailed(error.message);
