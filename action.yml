@@ -14,7 +14,7 @@ outputs:
   tag:
     description: "Final tag applied"
 runs:
-  using: 'node12'
+  using: "node16"
   # 'main' below needs to be relative to repo root for testing with 'act'
   # For running in GitHub, should be relative to 'action.yml' location
   main: "dist/index.js"
