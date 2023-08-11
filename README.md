@@ -56,9 +56,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Tag the deployment
-        uses: daily-co/create-tag-action@v1.0
+        uses: daily-co/create-tag-action@v1
         with:
           app-name: 'my-application'
           environment: 'qa'
