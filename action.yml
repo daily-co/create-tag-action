@@ -10,6 +10,9 @@ inputs:
   github-token:
     description: "API token for GitHub REST API"
     required: true
+  sha:
+    description: "commit sha to tag"
+    required: true
 outputs:
   tag:
     description: "Final tag applied"
