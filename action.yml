@@ -9,10 +9,10 @@ inputs:
     required: false
   github-token:
     description: "API token for GitHub REST API"
-    required: true
+    required: false
   sha:
     description: "commit sha to tag"
-    required: true
+    required: false
   owner:
     description: "owner of the repository"
     required: false
@@ -23,7 +23,7 @@ outputs:
   tag:
     description: "Final tag applied"
 runs:
-  using: "node16"
+  using: "node20"
   # 'main' below needs to be relative to repo root for testing with 'act'
   # For running in GitHub, should be relative to 'action.yml' location
   main: "dist/index.js"
