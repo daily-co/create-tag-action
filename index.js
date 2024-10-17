@@ -7,7 +7,11 @@ function stringifyDate(date) {
 
 function getTagName(appName, environment) {
   date = stringifyDate(new Date());
-  return `${appName}-${date}-${environment}`;
+  let tag = `${appName}-${date}`;
+  if (environment) {
+    tag = `${tag}-${environment}`
+  }
+  return tag;
 }
 
 async function run() {
@@ -17,9 +21,10 @@ async function run() {
       core.setFailed('Input "app-name" is missing');
     }
 
-    const environment = core.getInput("environment");
-    if (!environment) {
-      core.setFailed('Input "environment" is missing');
+    let environment = "";
+    const environmentInput = core.getInput("environment");
+    if (environmentInput) {
+      environment = environmentInput;
     }
 
     let githubToken = core.getInput("github-token");

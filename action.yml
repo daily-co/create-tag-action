@@ -6,7 +6,7 @@ inputs:
     required: true
   environment:
     description: 'Environment to which the deployment was made, e.g. "prod"'
-    required: true
+    required: false
   github-token:
     description: "API token for GitHub REST API"
     required: true
