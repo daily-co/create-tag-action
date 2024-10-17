@@ -9,7 +9,7 @@ function getTagName(appName, environment) {
   date = stringifyDate(new Date());
   let tag = `${appName}-${date}`;
   if (environment) {
-    tag = `${tag}-${environment}`
+    tag = `${tag}-${environment}`;
   }
   return tag;
 }
@@ -61,6 +61,8 @@ async function run() {
         'SHA to tag must be provided as input "sha" or environment variable "GITHUB_SHA"'
       );
     }
+
+    console.log(`Repo: ${owner}/${repo}, Tag: ${tagName}, SHA: ${sha}`);
 
     const createdTag = await octokit.git.createTag({
       owner,
