@@ -16,18 +16,18 @@ function getTagName(appName, environment) {
 
 async function run() {
   try {
-    const appName = core.getInput("app-name");
+    const appName = core.getInput("app-name", {required: true});
     if (!appName) {
       core.setFailed('Input "app-name" is missing');
     }
 
     let environment = "";
-    const environmentInput = core.getInput("environment");
+    const environmentInput = core.getInput("environment", {required: false});
     if (environmentInput) {
       environment = environmentInput;
     }
 
-    let githubToken = core.getInput("github-token");
+    let githubToken = core.getInput("github-token", {required: false});
     if (!githubToken) {
       if (process.env.GITHUB_TOKEN) {
         githubToken = process.env.GITHUB_TOKEN;
@@ -41,12 +41,12 @@ async function run() {
     const octokit = github.getOctokit(githubToken);
     let { owner, repo } = github.context.repo;
 
-    const repoInput = core.getInput("repo");
+    const repoInput = core.getInput("repo", {required: false});
     if (repoInput) {
       repo = repoInput;
     }
 
-    const ownerInput = core.getInput("owner");
+    const ownerInput = core.getInput("owner", {required: false});
     if (ownerInput) {
       owner = ownerInput;
     }
@@ -55,7 +55,7 @@ async function run() {
     core.setOutput("tag", tagName);
     const tagMessage = `${tagName} deployed via GitHub Actions`;
 
-    const sha = core.getInput("sha") || process.env.GITHUB_SHA;
+    const sha = core.getInput("sha", {required: false}) || process.env.GITHUB_SHA;
     if (!sha) {
       core.setFailed(
         'SHA to tag must be provided as input "sha" or environment variable "GITHUB_SHA"'
