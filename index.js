@@ -7,22 +7,27 @@ function stringifyDate(date) {
 
 function getTagName(appName, environment) {
   date = stringifyDate(new Date());
-  return `${appName}-${date}-${environment}`;
+  let tag = `${appName}-${date}`;
+  if (environment) {
+    tag = `${tag}-${environment}`;
+  }
+  return tag;
 }
 
 async function run() {
   try {
-    const appName = core.getInput("app-name");
+    const appName = core.getInput("app-name", {required: true});
     if (!appName) {
       core.setFailed('Input "app-name" is missing');
     }
 
-    const environment = core.getInput("environment");
-    if (!environment) {
-      core.setFailed('Input "environment" is missing');
+    let environment = "";
+    const environmentInput = core.getInput("environment", {required: false});
+    if (environmentInput) {
+      environment = environmentInput;
     }
 
-    let githubToken = core.getInput("github-token");
+    let githubToken = core.getInput("github-token", {required: false});
     if (!githubToken) {
       if (process.env.GITHUB_TOKEN) {
         githubToken = process.env.GITHUB_TOKEN;
@@ -34,18 +39,30 @@ async function run() {
     }
 
     const octokit = github.getOctokit(githubToken);
+    let { owner, repo } = github.context.repo;
+
+    const repoInput = core.getInput("repo", {required: false});
+    if (repoInput) {
+      repo = repoInput;
+    }
+
+    const ownerInput = core.getInput("owner", {required: false});
+    if (ownerInput) {
+      owner = ownerInput;
+    }
 
     const tagName = getTagName(appName, environment);
     core.setOutput("tag", tagName);
     const tagMessage = `${tagName} deployed via GitHub Actions`;
 
-    const { owner, repo } = github.context.repo;
-    const sha = core.getInput("sha") || process.env.GITHUB_SHA;
+    const sha = core.getInput("sha", {required: false}) || process.env.GITHUB_SHA;
     if (!sha) {
       core.setFailed(
         'SHA to tag must be provided as input "sha" or environment variable "GITHUB_SHA"'
       );
     }
+
+    console.log(`Repo: ${owner}/${repo}, Tag: ${tagName}, SHA: ${sha}`);
 
     const createdTag = await octokit.git.createTag({
       owner,
