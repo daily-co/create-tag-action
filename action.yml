@@ -13,6 +13,12 @@ inputs:
   sha:
     description: "commit sha to tag"
     required: true
+  owner:
+    description: "owner of the repository"
+    required: false
+  repo:
+    description: "name of the repository"
+    required: false
 outputs:
   tag:
     description: "Final tag applied"

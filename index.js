@@ -34,12 +34,22 @@ async function run() {
     }
 
     const octokit = github.getOctokit(githubToken);
+    let { owner, repo } = github.context.repo;
+
+    const repoInput = core.getInput("repo");
+    if (repoInput) {
+      repo = repoInput;
+    }
+
+    const ownerInput = core.getInput("owner");
+    if (ownerInput) {
+      owner = ownerInput;
+    }
 
     const tagName = getTagName(appName, environment);
     core.setOutput("tag", tagName);
     const tagMessage = `${tagName} deployed via GitHub Actions`;
 
-    const { owner, repo } = github.context.repo;
     const sha = core.getInput("sha") || process.env.GITHUB_SHA;
     if (!sha) {
       core.setFailed(
